@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTOSOCIAL - Autonomous Multi-Platform Scheduler Engine (PRO 24/7)</title>
+  
+  <!-- Typography: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Design System Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <img src="img/logo.jpg" alt="AUTOSOCIAL Logo" class="brand-logo-img">
+        <div class="brand-details">
+          <div class="brand-name">
+            AUTOSOCIAL <span class="badge-pro-pill">PRO 24/7</span>
+          </div>
+          <span class="brand-subline">Autonomous Engine</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-link-item active" data-tab="overview">
+          <div class="nav-link-left">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Ringkasan & Sesi</span>
+          </div>
+        </a>
+
+        <a class="nav-link-item" data-tab="vault">
+          <div class="nav-link-left">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Poster Vault</span>
+          </div>
+          <span class="nav-count-badge" id="posterCountBadge">0</span>
+        </a>
+
+        <a class="nav-link-item" data-tab="reports">
+          <div class="nav-link-left">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Laporan Publikasi</span>
+          </div>
+          <span class="nav-count-badge" id="reportCountBadge">0</span>
+        </a>
+
+        <a class="nav-link-item" data-tab="settings">
+          <div class="nav-link-left">
+            <i class="fa-solid fa-sliders"></i>
+            <span>Konfigurasi Akun</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="engine-status-box">
+          <div class="engine-status-dot pulse" id="engineDot"></div>
+          <div class="engine-status-text">
+            <span>Daemon 24/7 Aktif</span>
+            <div style="font-size: 0.7rem; color: var(--ink-400); font-family: var(--font-mono);">Asia/Jakarta</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN APP CANVAS -->
+    <main class="app-main">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="app-topbar">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <button class="topbar-mobile-toggle" id="btnMobileSidebar" title="Buka Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="live-time-chip">
+            <i class="fa-regular fa-clock"></i>
+            <span id="liveClock">12.00.00 WIB</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Theme Switcher Button (Light / Dark Ops Mode) -->
+          <button class="btn-theme-toggle" id="btnThemeToggle" title="Ganti Tema (Light / Dark Ops Mode)">
+            <i class="fa-regular fa-moon" id="themeIcon"></i>
+          </button>
+
+          <!-- Master Automation Toggle Switch -->
+          <div class="master-switch-wrapper">
+            <div class="master-switch-info">
+              <span class="switch-dot" id="masterSwitchDot"></span>
+              <span class="switch-label-status" id="masterSwitchStatusText">OTOMASI AKTIF</span>
+            </div>
+            <label class="ios-switch" title="Nyalakan / Jeda Seluruh Penjadwalan Otomatis">
+              <input type="checkbox" id="masterAutomationToggle" checked>
+              <span class="ios-slider"></span>
+            </label>
+          </div>
+        </div>
+      </header>
+
+      <!-- TAB CONTENT VIEWPORTS -->
+      <div class="content-canvas">
+
+        <!-- ====================================================================
+             TAB 1: RINGKASAN & SESI (OVERVIEW)
+             ==================================================================== -->
+        <section class="tab-pane active" id="tab-overview">
+          
+          <!-- KPI Summary Row -->
+          <div class="kpi-grid">
+            
+            <!-- Card 1: Target Harian Selesai -->
+            <div class="card">
+              <div class="kpi-header">
+                <span class="kpi-title">Target Harian Selesai</span>
+                <div class="kpi-icon-chip success"><i class="fa-solid fa-circle-check"></i></div>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-huge-number" id="metricSuccessToday">0</span>
+                <span class="kpi-sub-target">/ 9 Konten</span>
+              </div>
+              <div class="kpi-progress-track">
+                <div class="kpi-progress-fill" id="metricProgressBar" style="width: 0%;"></div>
+              </div>
+              <div class="kpi-caption-text" id="metricPercentText">0% tercapai hari ini (0/9)</div>
+            </div>
+
+            <!-- Card 2: Distribusi Platform (Hari Ini) -->
+            <div class="card">
+              <div class="kpi-header">
+                <span class="kpi-title">Distribusi Platform</span>
+                <div class="kpi-icon-chip share"><i class="fa-solid fa-share-nodes"></i></div>
+              </div>
+              <div class="plat-dist-list">
+                <div class="plat-dist-row">
+                  <span class="plat-dist-label ig"><i class="fa-brands fa-instagram"></i> Instagram</span>
+                  <span class="plat-dist-count" id="countIg">0 / 3</span>
+                </div>
+                <div class="plat-dist-row">
+                  <span class="plat-dist-label x"><i class="fa-brands fa-x-twitter"></i> X (Twitter)</span>
+                  <span class="plat-dist-count" id="countX">0 / 3</span>
+                </div>
+                <div class="plat-dist-row">
+                  <span class="plat-dist-label fb"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                  <span class="plat-dist-count" id="countFb">0 / 3</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Jendela Sesi Berikutnya (Hero Card) -->
+            <div class="card kpi-hero-card">
+              <div class="kpi-header">
+                <span class="kpi-title" id="nextSessionName" style="color: var(--primary);">Sesi Siang</span>
+                <span class="hero-status-tag" id="heroStatusTag">
+                  <span class="switch-dot"></span> JENDELA AKTIF
+                </span>
+              </div>
+              <div class="hero-countdown" id="nextSessionCountdown">--:--:--</div>
+              <div style="font-size: 0.78rem; color: var(--ink-400);" id="heroJitterSubtext">
+                Menuju eksekusi dengan randomized jitter
+              </div>
+            </div>
+
+            <!-- Card 4: Pelaporan Telegram 24/7 -->
+            <div class="card">
+              <div class="kpi-header">
+                <span class="kpi-title">Pelaporan Telegram</span>
+                <div class="kpi-icon-chip telegram"><i class="fa-brands fa-telegram"></i></div>
+              </div>
+              <div class="tg-status-row">
+                <i class="fa-solid fa-circle-check" style="color: var(--primary);"></i>
+                <span id="tgBotLabel">Bot Telegram Terhubung</span>
+              </div>
+              <button class="btn-secondary" id="btnTestTgProof" style="width: 100%;">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Test Kirim Bukti</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Main Table: Jadwal Sesi Publikasi Harian -->
+          <div class="section-card">
+            <div class="section-header" style="flex-wrap: wrap; gap: 12px;">
+              <div class="section-title-group">
+                <h2>Jadwal Sesi Publikasi Harian</h2>
+                <p>Setiap sesi memiliki jendela eksekusi dinamis dengan algoritma randomized jitter independen antarplatform.</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn-primary" id="btnOpenCustomDispatch">
+                  <i class="fa-solid fa-paper-plane"></i>
+                  <span>Eksekusi Sesi Kustom</span>
+                </button>
+                <button class="btn-icon-plain" id="btnRefreshSchedule" title="Perbarui Jadwal">
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Sesi</th>
+                    <th>Jendela (WIB)</th>
+                    <th>Instagram</th>
+                    <th>X (Twitter)</th>
+                    <th>Facebook</th>
+                    <th style="text-align: right;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyScheduleSessions">
+                  <!-- Sesi Pagi -->
+                  <tr id="rowSessionPagi">
+                    <td><strong>Sesi Pagi</strong></td>
+                    <td style="font-family: var(--font-mono); font-weight: 600;" id="windowPagiText">07.00–07.30</td>
+                    <td id="slotPagiIg">07.04 WIB</td>
+                    <td id="slotPagiX">07.12 WIB</td>
+                    <td id="slotPagiFb">07.22 WIB</td>
+                    <td style="text-align: right;">
+                      <span class="status-pill waiting" id="statusBadgePagi">
+                        Menunggu
+                      </span>
+                    </td>
+                  </tr>
+
+                  <!-- Sesi Siang -->
+                  <tr id="rowSessionSiang">
+                    <td><strong>Sesi Siang</strong></td>
+                    <td style="font-family: var(--font-mono); font-weight: 600;" id="windowSiangText">13.00–13.30</td>
+                    <td id="slotSiangIg">13.06 WIB</td>
+                    <td id="slotSiangX">13.15 WIB</td>
+                    <td id="slotSiangFb">13.25 WIB</td>
+                    <td style="text-align: right;">
+                      <span class="status-pill waiting" id="statusBadgeSiang">
+                        Menunggu
+                      </span>
+                    </td>
+                  </tr>
+
+                  <!-- Sesi Malam -->
+                  <tr id="rowSessionMalam">
+                    <td><strong>Sesi Malam</strong></td>
+                    <td style="font-family: var(--font-mono); font-weight: 600;" id="windowMalamText">18.00–18.30</td>
+                    <td id="slotMalamIg">18.05 WIB</td>
+                    <td id="slotMalamX">18.14 WIB</td>
+                    <td id="slotMalamFb">18.24 WIB</td>
+                    <td style="text-align: right;">
+                      <span class="status-pill waiting" id="statusBadgeMalam">
+                        Menunggu
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 24-Hour Timeline Visual -->
+            <div class="timeline-card-footer">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <span class="timeline-title" style="margin-bottom: 0;">Timeline Visual Sesi 24 Jam (Real-Time)</span>
+                <div class="timeline-legend" style="display: flex; align-items: center; gap: 14px; font-size: 0.75rem; color: var(--ink-400);">
+                  <span style="display: inline-flex; align-items: center; gap: 5px;"><span class="timeline-legend-dot session"></span> Sesi Publikasi</span>
+                  <span style="display: inline-flex; align-items: center; gap: 5px;"><span class="timeline-legend-dot live"></span> Waktu Sekarang (Live)</span>
+                </div>
+              </div>
+              <div class="timeline-track" id="timelineTrack">
+                <!-- Pagi: 07:00 -->
+                <div class="timeline-window-block" id="timelineBlockPagi" style="left: 29.16%; width: 2.08%;" title="Sesi Pagi (07.00 WIB)"></div>
+                <!-- Siang: 13:00 -->
+                <div class="timeline-window-block" id="timelineBlockSiang" style="left: 54.16%; width: 2.08%;" title="Sesi Siang (13.00 WIB)"></div>
+                <!-- Malam: 18:00 -->
+                <div class="timeline-window-block" id="timelineBlockMalam" style="left: 75.00%; width: 2.08%;" title="Sesi Malam (18.00 WIB)"></div>
+                <!-- Live Current Time Marker -->
+                <div class="timeline-current-marker" id="timelineCurrentMarker" title="Waktu Sekarang">
+                  <div class="marker-head"></div>
+                </div>
+              </div>
+              <div class="timeline-hour-markers">
+                <span>00.00</span>
+                <span>06.00</span>
+                <span>12.00</span>
+                <span>18.00</span>
+                <span>24.00</span>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ====================================================================
+             TAB 2: POSTER VAULT (MANAGEMENT & PRE-FLIGHT)
+             ==================================================================== -->
+        <section class="tab-pane" id="tab-vault">
+          
+          <!-- Dropzone Container -->
+          <div class="poster-dropzone-box" id="posterDropzone">
+            <div class="dropzone-icon-circle">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <div class="dropzone-main-text">Tarik & Lepas File Poster di Sini</div>
+            <div class="dropzone-sub-text">Mendukung format JPG, JPEG, PNG (Maksimal 5 MB per file). Validasi instan pra-publikasi.</div>
+            <button class="btn-secondary" id="btnSelectFileTrigger" type="button" style="margin-top: 12px;">
+              <i class="fa-solid fa-folder-open"></i>
+              <span>Pilih Berkas dari Komputer</span>
+            </button>
+            <input type="file" id="filePosterInput" accept="image/jpeg,image/png,image/jpg" style="display: none;">
+          </div>
+
+          <!-- Toolbar: Search, Filters & Total Count -->
+          <div class="vault-toolbar">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <div class="search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="inputSearchPosters" placeholder="Cari poster vault...">
+              </div>
+              <div class="filter-chips-group">
+                <button class="chip-btn active" data-filter-vault="ALL">Semua</button>
+                <button class="chip-btn" data-filter-vault="AVAILABLE">Tersedia</button>
+                <button class="chip-btn" data-filter-vault="SCHEDULED">Terjadwal</button>
+                <button class="chip-btn" data-filter-vault="POSTED">Terpublikasi</button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 0.85rem; font-weight: 600; color: var(--ink-400);" id="vaultTotalText">
+                Total: 0 Poster
+              </span>
+              <button class="btn-primary" id="btnUploadPosterTrigger">
+                <i class="fa-solid fa-plus"></i>
+                <span>Unggah Poster</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Posters Grid Container (4 Columns) -->
+          <div class="posters-grid" id="posterGridContainer">
+            <!-- Dynamic Poster Cards rendered by app.js -->
+          </div>
+
+        </section>
+
+        <!-- ====================================================================
+             TAB 3: LAPORAN PUBLIKASI (AUDIT & PROOF LOGS)
+             ==================================================================== -->
+        <section class="tab-pane" id="tab-reports">
+          
+          <!-- Summary Metrics Strip -->
+          <div class="summary-strip">
+            <div class="strip-item">
+              <div>
+                <div class="strip-label">Total Terbit</div>
+                <div class="strip-val" id="stripTotalPublished">0</div>
+              </div>
+              <div class="kpi-icon-chip success"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            </div>
+
+            <div class="strip-item">
+              <div>
+                <div class="strip-label">Tingkat Sukses</div>
+                <div class="strip-val" style="color: var(--primary);" id="stripSuccessRate">100%</div>
+              </div>
+              <div class="kpi-icon-chip success"><i class="fa-solid fa-circle-check"></i></div>
+            </div>
+
+            <div class="strip-item">
+              <div>
+                <div class="strip-label">Gagal / Error</div>
+                <div class="strip-val" style="color: var(--danger);" id="stripTotalFailed">0</div>
+              </div>
+              <div class="kpi-icon-chip" style="background-color: var(--danger-soft); color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            </div>
+
+            <div class="strip-item">
+              <div>
+                <div class="strip-label">Bukti Telegram</div>
+                <div class="strip-val" id="stripTelegramSent">0</div>
+              </div>
+              <div class="kpi-icon-chip telegram"><i class="fa-brands fa-telegram"></i></div>
+            </div>
+          </div>
+
+          <!-- Filter Toolbar -->
+          <div class="vault-toolbar" style="flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <div class="search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="inputSearchLogs" placeholder="Cari platform, sesi, link...">
+              </div>
+              
+              <!-- Platform Filter Chips -->
+              <div class="filter-chips-group">
+                <button class="chip-btn active" data-filter-platform="ALL">Semua Platform</button>
+                <button class="chip-btn" data-filter-platform="INSTAGRAM">Instagram</button>
+                <button class="chip-btn" data-filter-platform="X">X (Twitter)</button>
+                <button class="chip-btn" data-filter-platform="FACEBOOK">Facebook</button>
+              </div>
+
+              <!-- Status Filter Chips -->
+              <div class="filter-chips-group">
+                <button class="chip-btn active" data-filter-status="ALL">Semua Status</button>
+                <button class="chip-btn" data-filter-status="SUCCESS"><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> Sukses</button>
+                <button class="chip-btn" data-filter-status="FAILED" style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Gagal</button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <button class="btn-secondary" id="btnCleanOffSchedule">
+                <i class="fa-solid fa-broom"></i>
+                <span>Bersihkan Uji Coba</span>
+              </button>
+              <button class="btn-secondary" id="btnDeleteAllLogs" style="color: var(--danger); border-color: rgba(220, 38, 38, 0.3);">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>Hapus Semua</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Standardized 5-Column Audit Table -->
+          <div class="section-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 40px; text-align: center;">
+                      <input type="checkbox" id="checkSelectAll" title="Pilih Semua">
+                    </th>
+                    <th>Platform</th>
+                    <th>Sesi</th>
+                    <th>Tanggal & Waktu Aktual</th>
+                    <th>Link Post</th>
+                    <th>Foto Konten</th>
+                    <th style="text-align: right;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyFullLogs">
+                  <!-- Dynamic Rows populated by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ====================================================================
+             TAB 4: KONFIGURASI AKUN & KREDENSIAL
+             ==================================================================== -->
+        <section class="tab-pane" id="tab-settings">
+          
+          <div class="config-grid">
+            
+            <!-- Section 1: Kredensial Platform -->
+            <div class="config-card">
+              <div class="config-card-header">
+                <i class="fa-solid fa-key"></i>
+                <div>
+                  <h3>Kredensial Akun & Sesi Browser</h3>
+                  <p style="font-size: 0.8rem; color: var(--ink-400);">Klik logo platform untuk membuka profil akun yang tertaut. Sesi cookies browser digunakan otomatis untuk publikasi mandiri.</p>
+                </div>
+              </div>
+
+              <div class="accounts-list">
+                <!-- Instagram -->
+                <div class="account-row-item">
+                  <a href="https://instagram.com/" target="_blank" id="linkIgProfile" class="account-avatar-link" title="Buka Profil Akun Instagram yang Tertaut">
+                    <div class="account-icon-avatar ig"><i class="fa-brands fa-instagram"></i></div>
+                    <div>
+                      <div style="font-weight: 700; font-size: 0.9rem;">Instagram <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: var(--ink-400);"></i></div>
+                      <div style="font-size: 0.78rem; color: var(--ink-400);" id="igSubtitleText">Belum Terhubung</div>
+                    </div>
+                  </a>
+                  <div class="account-inputs-wrap">
+                    <input type="text" id="inputIgUsername" placeholder="Username IG (@user)" class="input-plain">
+                    <div class="input-with-eye">
+                      <input type="password" id="inputIgPassword" placeholder="Password IG">
+                      <button type="button" class="btn-toggle-pwd" data-target="inputIgPassword" title="Tampilkan/Sembunyikan Password"><i class="fa-regular fa-eye"></i></button>
+                    </div>
+                  </div>
+                  <span class="session-status-badge active" id="badgeIgSession"><i class="fa-solid fa-circle-check"></i> TERHUBUNG</span>
+                </div>
+
+                <!-- X (Twitter) -->
+                <div class="account-row-item">
+                  <a href="https://x.com/" target="_blank" id="linkXProfile" class="account-avatar-link" title="Buka Profil Akun X yang Tertaut">
+                    <div class="account-icon-avatar x"><i class="fa-brands fa-x-twitter"></i></div>
+                    <div>
+                      <div style="font-weight: 700; font-size: 0.9rem;">X (Twitter) <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: var(--ink-400);"></i></div>
+                      <div style="font-size: 0.78rem; color: var(--ink-400);" id="xSubtitleText">Belum Terhubung</div>
+                    </div>
+                  </a>
+                  <div class="account-inputs-wrap">
+                    <input type="text" id="inputXUsername" placeholder="Username X (@user)" class="input-plain">
+                    <div class="input-with-eye">
+                      <input type="password" id="inputXPassword" placeholder="Password X">
+                      <button type="button" class="btn-toggle-pwd" data-target="inputXPassword" title="Tampilkan/Sembunyikan Password"><i class="fa-regular fa-eye"></i></button>
+                    </div>
+                  </div>
+                  <span class="session-status-badge active" id="badgeXSession"><i class="fa-solid fa-circle-check"></i> TERHUBUNG</span>
+                </div>
+
+                <!-- Facebook -->
+                <div class="account-row-item">
+                  <a href="https://facebook.com/me" target="_blank" id="linkFbProfile" class="account-avatar-link" title="Buka Profil Akun Facebook yang Tertaut">
+                    <div class="account-icon-avatar fb"><i class="fa-brands fa-facebook"></i></div>
+                    <div>
+                      <div style="font-weight: 700; font-size: 0.9rem;">Facebook <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: var(--ink-400);"></i></div>
+                      <div style="font-size: 0.78rem; color: var(--ink-400);" id="fbSubtitleText">Belum Terhubung</div>
+                    </div>
+                  </a>
+                  <div class="account-inputs-wrap">
+                    <input type="text" id="inputFbEmail" placeholder="Email / User FB" class="input-plain">
+                    <div class="input-with-eye">
+                      <input type="password" id="inputFbPassword" placeholder="Password FB">
+                      <button type="button" class="btn-toggle-pwd" data-target="inputFbPassword" title="Tampilkan/Sembunyikan Password"><i class="fa-regular fa-eye"></i></button>
+                    </div>
+                  </div>
+                  <span class="session-status-badge active" id="badgeFbSession"><i class="fa-solid fa-circle-check"></i> TERHUBUNG</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+                <button class="btn-primary" id="btnSaveConfigCredentials" type="button">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>Simpan Kredensial Akun</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Section 2: Sesi & Jitter (Waktu & Variasi Acak) -->
+            <div class="config-card">
+              <div class="config-card-header">
+                <i class="fa-solid fa-clock"></i>
+                <div>
+                  <h3>Jadwal Sesi & Variasi Waktu Acak (Jitter)</h3>
+                  <p style="font-size: 0.8rem; color: var(--ink-400);">Algoritma menyebarkan jadwal publikasi platform secara acak dan proporsional sesuai durasi jendela yang ditentukan.</p>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                <div>
+                  <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--ink-400); display: block; margin-bottom: 6px;">Sesi Pagi</label>
+                  <input type="text" value="07.00 WIB" class="input-plain" readonly style="font-family: var(--font-mono); font-weight: 600;">
+                </div>
+                <div>
+                  <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--ink-400); display: block; margin-bottom: 6px;">Sesi Siang</label>
+                  <input type="text" value="13.00 WIB" class="input-plain" readonly style="font-family: var(--font-mono); font-weight: 600;">
+                </div>
+                <div>
+                  <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--ink-400); display: block; margin-bottom: 6px;">Sesi Malam</label>
+                  <input type="text" value="18.00 WIB" class="input-plain" readonly style="font-family: var(--font-mono); font-weight: 600;">
+                </div>
+              </div>
+
+              <!-- Durasi Jendela Sesi yang Dapat Disesuaikan -->
+              <div style="margin-top: 16px; background: var(--bg-subtle); padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <label style="font-size: 0.82rem; font-weight: 700; color: var(--ink-900);">Durasi Jendela Sesi</label>
+                  <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary); font-family: var(--font-mono);" id="sessionDurationDisplay">30 Menit</span>
+                </div>
+                <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                  <input type="number" id="inputSessionDuration" min="10" max="180" step="5" value="30" class="input-plain" style="max-width: 130px; font-family: var(--font-mono); font-weight: 700;">
+                  <span style="font-size: 0.78rem; color: var(--ink-400); flex: 1;">
+                    Dapat disesuaikan (misal 30m, 60m, atau 150m / 2.5 jam). Algoritma matematika akan menghitung sebaran acak tiap platform secara proporsional.
+                  </span>
+                </div>
+              </div>
+
+              <div class="jitter-slider-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 0.82rem; font-weight: 700; color: var(--ink-900);">Pengaturan Jendela & Sebaran Jitter Acak</span>
+                  <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary); font-family: var(--font-mono);" id="jitterRangeDisplay">Proporsional (0 – 28 Menit)</span>
+                </div>
+                <input type="range" id="sliderJitterMock" min="10" max="180" step="5" value="30" style="cursor: pointer; width: 100%;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--ink-400); margin-top: 6px;">
+                  <span>10 Menit</span>
+                  <span>Slot 2 (Tengah)</span>
+                  <span>180 Menit (3 Jam)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Telegram & Simpan -->
+            <div class="config-card">
+              <div class="config-card-header">
+                <i class="fa-brands fa-telegram"></i>
+                <div>
+                  <h3>Integrasi Bot Telegram (Laporan Real-Time)</h3>
+                  <p style="font-size: 0.8rem; color: var(--ink-400);">Laporan 5 data terstandar dan foto konten dikirim instan ke akun Telegram Anda setiap kali postingan berhasil.</p>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 18px;">
+                <div class="input-with-eye">
+                  <input type="password" id="inputTgToken" placeholder="Telegram Bot Token (cth: 123456:ABC-DEF...)">
+                  <button type="button" class="btn-toggle-pwd" data-target="inputTgToken"><i class="fa-regular fa-eye"></i></button>
+                </div>
+                <input type="text" id="inputTgChat" placeholder="Telegram Chat ID (cth: 6564046368)" class="input-plain">
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 10px;">
+                  <button class="btn-secondary" id="btnTestTgPingFromSettings" type="button">
+                    <i class="fa-solid fa-plug"></i>
+                    <span>Uji Ping Bot</span>
+                  </button>
+                  <button class="btn-secondary" id="btnTestTgProofFromSettings" type="button">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Kirim Bukti Foto Nyata</span>
+                  </button>
+                </div>
+
+                <button class="btn-primary" id="btnSaveConfig">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>Simpan Konfigurasi</span>
+                </button>
+              </div>
+
+              <!-- Danger Zone -->
+              <div class="danger-zone-box">
+                <h4><i class="fa-solid fa-triangle-exclamation"></i> Zona Berbahaya</h4>
+                <p style="font-size: 0.8rem; color: var(--ink-600); margin-bottom: 12px;">Reset semua log dan status pengunggahan hari ini jika ingin mengulang rotasi dari awal.</p>
+                <button class="btn-danger" id="btnResetDay">
+                  <i class="fa-solid fa-rotate-left"></i>
+                  <span>Reset Status Hari Ini</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- FLOATING BULK ACTIONS BAR -->
+  <div class="floating-bulk-bar" id="floatingBulkBar">
+    <span class="bulk-count-badge"><span id="selectedCountBadge">0</span> item terpilih</span>
+    <div class="bulk-actions-group">
+      <button class="btn-bulk-danger" id="btnBulkDelete">
+        <i class="fa-solid fa-trash-can"></i> Hapus Terpilih
+      </button>
+      <button class="btn-bulk-cancel" id="btnCancelSelection">Batal</button>
+    </div>
+  </div>
+
+  <!-- MODAL: IMAGE PROOF PREVIEW -->
+  <div class="modal-overlay" id="modalProofPreview">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 1rem; font-weight: 700;" id="modalProofTitle">Pratinjau Bukti Tayang</h3>
+        <button class="btn-icon-plain" id="btnCloseProofModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <img src="" alt="Pratinjau Bukti Posting" class="modal-image-preview" id="modalProofImg">
+        <div style="margin-top: 14px; font-size: 0.85rem; color: var(--ink-600);" id="modalProofCaption"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CUSTOM SESSION ON-DEMAND DISPATCH -->
+  <div class="modal-overlay" id="modalCustomDispatch">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-paper-plane" style="color: var(--primary);"></i> Eksekusi Sesi Kustom (On-Demand)
+        </h3>
+        <button class="btn-icon-plain" id="btnCloseCustomDispatchModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.84rem; color: var(--ink-600); margin-bottom: 16px;">
+          Pilih sesi dan platform yang ingin dipublikasikan sekarang. Sistem akan merotasi poster yang belum terbit hari ini secara otomatis.
+        </p>
+
+        <div style="margin-bottom: 16px;">
+          <label style="font-size: 0.8rem; font-weight: 700; color: var(--ink-900); display: block; margin-bottom: 6px;">Pilih Sesi Target</label>
+          <select id="selectCustomSessionType" class="input-plain" style="font-weight: 600;">
+            <option value="PAGI">Sesi Pagi (07.00 WIB)</option>
+            <option value="SIANG" selected>Sesi Siang (13.00 WIB)</option>
+            <option value="MALAM">Sesi Malam (18.00 WIB)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 0.8rem; font-weight: 700; color: var(--ink-900); display: block; margin-bottom: 8px;">Pilih Platform yang Ingin Diterbitkan</label>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: var(--bg-subtle); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+              <input type="checkbox" id="checkPlatIg" value="INSTAGRAM" checked>
+              <span style="font-weight: 600; font-size: 0.88rem;"><i class="fa-brands fa-instagram" style="color: var(--color-ig); margin-right: 6px;"></i> Instagram</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: var(--bg-subtle); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+              <input type="checkbox" id="checkPlatX" value="X" checked>
+              <span style="font-weight: 600; font-size: 0.88rem;"><i class="fa-brands fa-x-twitter" style="margin-right: 6px;"></i> X (Twitter)</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: var(--bg-subtle); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+              <input type="checkbox" id="checkPlatFb" value="FACEBOOK" checked>
+              <span style="font-weight: 600; font-size: 0.88rem;"><i class="fa-brands fa-facebook" style="color: var(--color-fb); margin-right: 6px;"></i> Facebook</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button class="btn-secondary" id="btnCancelCustomDispatch">Batal</button>
+          <button class="btn-primary" id="btnSubmitCustomDispatch">
+            <i class="fa-solid fa-bolt"></i>
+            <span>Mulai Publikasi Sekarang</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-stack" id="toastContainer"></div>
+
+  <!-- Client Application Controller -->
+  <script src="js/app.js"></script>
+</body>
+</html>

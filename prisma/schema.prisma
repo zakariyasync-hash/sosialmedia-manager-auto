@@ -1,0 +1,112 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                    String      @id @default(uuid())
+  platform              String      // 'INSTAGRAM' | 'FACEBOOK' | 'X' | 'TELEGRAM'
+  accountName           String
+  platformAccountId     String      // Page ID / IG User ID / X User ID / Telegram Chat ID
+  accessTokenEncrypted  String
+  refreshTokenEncrypted String?
+  tokenIv               String?
+  tokenTag              String?
+  tokenExpiresAt        DateTime?
+  tokenStatus           String      @default("ACTIVE") // 'ACTIVE' | 'EXPIRED' | 'REVOKED' | 'RATE_LIMITED'
+  tokenScopes           String      @default("[]") // JSON string of scopes
+  metadata              String      @default("{}") // JSON string
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  schedules             Schedule[]
+  postLogs              PostLog[]
+
+  @@unique([platform, platformAccountId])
+}
+
+model Asset {
+  id              String    @id @default(uuid())
+  storagePath     String    // Local relative or absolute path
+  publicUrl       String?
+  fileName        String
+  fileSizeBytes   Int
+  mimeType        String    // 'image/jpeg' | 'image/png'
+  widthPx         Int       @default(1080)
+  heightPx        Int       @default(1080)
+  aspectRatio     String    @default("1:1") // '1:1' | '4:5'
+  checksumSha256  String    @unique
+  captionTemplate String?
+  status          String    @default("AVAILABLE") // 'AVAILABLE' | 'SCHEDULED' | 'POSTED' | 'ARCHIVED' | 'QUARANTINED'
+  metadata        String    @default("{}") // JSON string
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  postLogs        PostLog[]
+}
+
+model Schedule {
+  id                    String    @id @default(uuid())
+  accountId             String?
+  platform              String    // 'INSTAGRAM' | 'FACEBOOK' | 'X'
+  sessionType           String    // 'PAGI' | 'SIANG' | 'MALAM'
+  name                  String
+  timeSlot              String    // '07:00:00' | '13:00:00' | '18:00:00'
+  timezone              String    @default("Asia/Jakarta")
+  isActive              Boolean   @default(true)
+  assetSelectionStrategy String   @default("SMART_SHUFFLE") // 'SMART_SHUFFLE' | 'FIFO' | 'PRIORITY'
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  account               Account?  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  postLogs              PostLog[]
+
+  @@unique([platform, sessionType])
+}
+
+model PostLog {
+  id                    String    @id @default(uuid())
+  scheduleId            String?
+  accountId             String?
+  assetId               String?
+  platform              String    // 'INSTAGRAM' | 'FACEBOOK' | 'X'
+  sessionType           String    // 'PAGI' | 'SIANG' | 'MALAM'
+  idempotencyKey        String    @unique
+  status                String    @default("PENDING") // 'PENDING' | 'PROCESSING' | 'SUCCESS' | 'FAILED' | 'RETRYING'
+  attemptCount          Int       @default(1)
+  maxAttempts           Int       @default(3)
+  scheduledFor          DateTime
+  executedAt            DateTime?
+  platformPostId        String?
+  platformPostUrl       String?
+  screenshotStoragePath String?
+  screenshotUrl         String?
+  telegramStatus        String    @default("PENDING") // 'PENDING' | 'SENT' | 'FAILED'
+  telegramMessageId     String?
+  telegramSentAt        DateTime?
+  retentionValidUntil   DateTime? // executedAt + 7 days
+  isDeletedPrematurely  Boolean   @default(false)
+  requestPayload        String?   // JSON string
+  responsePayload       String?   // JSON string
+  errorCode             String?
+  errorMessage          String?
+  executionDurationMs   Int?
+  isSimulated           Boolean   @default(false)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  schedule              Schedule? @relation(fields: [scheduleId], references: [id])
+  account               Account?  @relation(fields: [accountId], references: [id])
+  asset                 Asset?    @relation(fields: [assetId], references: [id])
+}
+
+model SystemSetting {
+  key         String   @id
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}

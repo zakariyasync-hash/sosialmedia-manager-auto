@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+dist/
+
+# Environment variables
+.env
+*.local
+
+# Database
+prisma/*.db
+prisma/*.db-journal
+
+# Sessions & Private Cookies
+storage/sessions/*.json
+!storage/sessions/.gitkeep
+
+# Runtime Screenshots & Failures
+storage/screenshots/*.png
+storage/screenshots/*.jpg
+storage/screenshots/*.jpeg
+storage/screenshots/failures/*
+!storage/screenshots/.gitkeep
+!storage/screenshots/failures/.gitkeep
+
+# Chrome CDP Profiles
+storage/chrome_profile/*
+storage/browser_profiles/*
+!storage/chrome_profile/.gitkeep
+!storage/browser_profiles/.gitkeep
+
+# Logs & OS Files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

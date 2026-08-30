@@ -1,0 +1,59 @@
+{
+  "name": "sosialmedia-manager-auto",
+  "version": "1.0.0",
+  "description": "Autonomous 24/7 Multi-Platform Social Media Auto-Poster & Telegram Automated Reporting System",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "chrome:open": "ts-node scripts/open_chrome_debug.ts",
+    "chrome:sync": "ts-node scripts/sync_sessions_from_chrome.ts",
+    "login:ig": "ts-node scripts/open_browser_manual_login.ts instagram",
+    "login:fb": "ts-node scripts/open_browser_manual_login.ts facebook",
+    "login:x": "ts-node scripts/open_browser_manual_login.ts x",
+    "set:x-cookie": "ts-node scripts/set_x_cookie.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:chaos": "jest --testPathPattern=chaos",
+    "test:ig": "ts-node scripts/test_instagram_interactive.ts",
+    "test:fb": "ts-node scripts/test_facebook_login.ts",
+    "test:x": "ts-node scripts/test_x_login.ts"
+  },
+  "keywords": [
+    "social-media",
+    "automation",
+    "instagram",
+    "facebook",
+    "twitter",
+    "telegram-bot",
+    "scheduler"
+  ],
+  "author": "Engineering Team",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "croner": "^9.0.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "form-data": "^4.0.1",
+    "multer": "^1.4.5-lts.1",
+    "playwright": "^1.49.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^30.0.0",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.10.2",
+    "jest": "^30.5.0",
+    "prisma": "^5.22.0",
+    "ts-jest": "^29.4.12",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  }
+}
