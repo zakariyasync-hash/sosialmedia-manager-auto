@@ -28,6 +28,28 @@
 
 ---
 
+## 📸 Bukti Tayang Otomatis (Proof-of-Work Gallery)
+
+Berikut adalah bukti tangkapan layar live hasil eksekusi publikasi otomatis poster dan caption oleh bot AI:
+
+### 1. 🐦 Bukti Tayang X (Twitter)
+> Bot secara otomatis mengisi composer X, mengunggah file poster beresolusi tinggi, mengetik caption ramah batas 280 karakter, dan menangkap screenshot status publikasi yang telah live:
+
+<p align="center">
+  <img src="assets/proof_twitter.png" alt="Bukti Tayang Live X / Twitter" width="850" style="border-radius: 12px; border: 1px solid #334155; box-shadow: 0 8px 24px rgba(0,0,0,0.4);" />
+</p>
+
+---
+
+### 2. 📸 Bukti Alur & Publikasi Instagram
+> Bot secara otomatis melakukan navigasi tangguh (*Resilient Navigation*), membuka popover pembuatan postingan, memasukkan media poster, mengisi caption humanis, dan menyelesaikan alur posting feed:
+
+<p align="center">
+  <img src="assets/proof_instagram.png" alt="Bukti Alur Posting Instagram" width="850" style="border-radius: 12px; border: 1px solid #334155; box-shadow: 0 8px 24px rgba(0,0,0,0.4);" />
+</p>
+
+---
+
 ## 🌟 Fitur Unggulan
 
 - 🤖 **Otonomi Penuh 24/7 (3 Sesi Harian)**:
@@ -48,7 +70,10 @@
 ## 🏗️ Struktur Direktori
 
 ```text
-├── assets/               # Gambar avatar & banner proyek
+├── assets/               # Banner, avatar & bukti visual screenshot tayang
+│   ├── banner.png           # Avatar bot utama
+│   ├── proof_twitter.png    # Bukti tangkapan layar live X (Twitter)
+│   └── proof_instagram.png  # Bukti tangkapan layar alur Instagram
 ├── prisma/               # Skema SQLite Prisma (Asset, Schedule, PostLog, SessionHealth)
 ├── public/               # Frontend Dashboard (HTML, CSS Glassmorphism, JS Client)
 ├── reports/              # Dokumen Laporan Pengujian (test_report.html & test_report.pdf)
@@ -84,7 +109,7 @@
 
 ### 1. Clone Repositori & Install Dependensi
 ```bash
-git clone https://github.com/username/sosialmedia-manager-auto.git
+git clone https://github.com/zakariyasync-hash/sosialmedia-manager-auto.git
 cd sosialmedia-manager-auto
 npm install
 ```
@@ -149,7 +174,7 @@ npm run login:x
 Cocok jika akun Anda memiliki 2FA / Passkey yang lebih mudah login di browser Chrome asli:
 
 1. **Jalankan Skrip Chrome Debug**:
-   - Di Windows: Cukup klik ganda file [`buka_chrome.bat`](file:///d:/01_Development/active/sosialmedia-manager-auto/buka_chrome.bat) atau jalankan `npm run chrome:open`.
+   - Di Windows: Cukup klik ganda file [`buka_chrome.bat`](buka_chrome.bat) atau jalankan `npm run chrome:open`.
 2. **Login di Browser Chrome**:
    - Buka tab `instagram.com`, `facebook.com`, dan `x.com` lalu login ke akun Anda.
 3. **Ekstrak Sesi**:
@@ -202,7 +227,7 @@ npm run test:chaos
 npx ts-node scripts/generate_test_report.ts
 ```
 
-Laporan verifikasi lengkap dapat dilihat di folder [`reports/`](file:///d:/01_Development/active/sosialmedia-manager-auto/reports/):
+Laporan verifikasi lengkap dapat dilihat di folder [`reports/`](reports/):
 - **`reports/test_report.html`** (Laporan visual interaktif)
 - **`reports/test_report.pdf`** (Laporan resmi siap cetak)
 
