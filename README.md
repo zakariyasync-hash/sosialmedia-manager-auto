@@ -1,124 +1,217 @@
 <p align="center">
-  <img src="assets/banner.png" alt="AutoSocial 24/7 Avatar" width="160" style="border-radius: 50%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);" />
+  <img src="assets/banner.png" alt="AutoSocial 24/7 Banner" width="180" style="border-radius: 50%; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); border: 3px solid #3b82f6;" />
 </p>
 
-<h1 align="center">AutoSocial 24/7</h1>
+<h1 align="center">⚡ AutoSocial 24/7</h1>
+
 <p align="center">
-  <strong>Bot Otomasi Posting Multi-Platform (Instagram, Facebook, X) + Laporan Instan Telegram</strong>
+  <strong>Autonomous Multi-Platform Social Media Auto-Poster & Real-Time Telegram Telemetry Engine</strong><br>
+  <em>Solusi otomasi publikasi postingan (Instagram Feed, Facebook, X/Twitter) tanpa ketergantungan API Developer berbayar — dilengkapi pemulihan kesalahan cerdas, simulasi ketikan manusia, dan telemetri langsung ke Telegram.</em>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/TypeScript-Ready-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/Playwright-Engine-2EAD33?style=flat-square&logo=playwright&logoColor=white" alt="Playwright" />
-  <img src="https://img.shields.io/badge/Prisma-SQLite-2D3748?style=flat-square&logo=prisma&logoColor=white" alt="Prisma" />
-  <img src="https://img.shields.io/badge/Telegram-Bot%20Reports-2CA5E0?style=flat-square&logo=telegram&logoColor=white" alt="Telegram" />
-  <img src="https://img.shields.io/badge/License-ISC-blue?style=flat-square" alt="License" />
+  <a href="#-fitur-utama"><img src="https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge&logo=shield" alt="Status" /></a>
+  <a href="#-arsitektur-dan-alur-kerja"><img src="https://img.shields.io/badge/Engine-Playwright%20Chromium-45ba4b?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/Language-TypeScript%205.0-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/Database-Prisma%20SQLite-2d3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/Telemetry-Telegram%20Bot-2ca5e0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram" /></a>
+  <a href="#-pengujian-dan-kualitas-sistem"><img src="https://img.shields.io/badge/Tests-39%2F39%20Passing-brightgreen?style=for-the-badge&logo=jest&logoColor=white" alt="Tests" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-ISC-blue?style=for-the-badge" alt="License" /></a>
+</p>
+
+<p align="center">
+  <a href="#-latar-belakang--keunggulan">Latar Belakang</a> •
+  <a href="#-bukti-hasil-eksekusi-langsung">Bukti Hasil</a> •
+  <a href="#-fitur-utama">Fitur Utama</a> •
+  <a href="#-arsitektur-dan-alur-kerja">Arsitektur</a> •
+  <a href="#-panduan-instalasi--persiapan">Instalasi</a> •
+  <a href="#-metode-autentikasi-cookie-vault">Autentikasi</a> •
+  <a href="#-telemetri--laporan-telegram">Telegram</a> •
+  <a href="#-panduan-deployment-247">Deployment 24/7</a> •
+  <a href="#-pengujian-dan-kualitas-sistem">Testing</a>
 </p>
 
 ---
 
-## 💡 Latar Belakang & Alasan Dibuat
+## 💡 Latar Belakang & Keunggulan
 
-Kebanyakan tools auto-post sosial media di luar sana butuh akun **Developer API** (Facebook Graph API atau Twitter API v2) yang persyaratannya ribet, verifikasi berbelit, dan harganya mahal untuk akun pribadi/tim kecil.
+Sebagian besar alat otomatisasi media sosial di pasaran memiliki hambatan besar:
+1. **Biaya API Sangat Mahal**: Akses Twitter/X API v2 dan Meta Graph API mengenakan tarif ratusan hingga ribuan dolar per bulan untuk kuota posting rutin.
+2. **Birokrasi & Verifikasi Ketat**: Pendaftaran akun pengembang Meta & X sering kali ditolak atau memakan waktu berminggu-minggu bagi pengguna individu/UMKM.
+3. **SaaS Berlangganan Membatasi Akun**: Layanan pihak ketiga (Buffer, Hootsuite, Later) mengenakan biaya bulanan tinggi dan membatasi jumlah akun serta frekuensi posting harian.
 
-**AutoSocial 24/7** dibuat sebagai solusi praktis: sistem ini berjalan seperti manusia yang membuka browser lewat **Playwright**, login menggunakan sesi cookie Anda, memposting poster sesuai jadwal, lalu langsung mengirimkan bukti screenshot tayang ke Telegram secara *real-time*.
+### 🚀 Solusi AutoSocial 24/7
+**AutoSocial 24/7** mengadopsi pendekatan modern berbasis **Playwright Headless Browser Automation** + **Session-Aware Cookie Vault**:
+- Mengemulasikan perilaku pengguna nyata dengan jeda acak (*humanized typing jitter*) sehingga bebas biaya API.
+- Cukup login satu kali via Chrome Debugging Protocol (CDP) atau terminal interaktif; sesi disimpan aman tanpa risiko *checkpoint* berulang.
+- Otomatis memposting gambar/video dan caption humanis, mengambil tangkapan layar bukti tayang, lalu mengirimkannya ke grup/chat Telegram pribadi Anda secara *real-time*.
 
 ---
 
-## 📸 Bukti Hasil Eksekusi Otomatis
+## 📊 Tabel Komparasi
 
-Berikut adalah bukti tangkapan layar langsung saat bot menjalankan tugas posting di platform target:
+| Fitur / Parameter | Official Developer API | Layanan Cloud SaaS | ⚡ AutoSocial 24/7 |
+| :--- | :---: | :---: | :---: |
+| **Biaya Bulanan** | $100 - $5,000 / bln | $15 - $200 / bln | **Gratis (100% Open Source)** |
+| **Verifikasi Bisnis / Dokumen** | Wajib & Berbelit | Terkadang Wajib | **Tanpa Verifikasi / Langsung Pakai** |
+| **Batas Akun & Media** | Sangat Dibatasi Kuota | Dibatasi Paket Tier | **Tanpa Batas (Unlimited)** |
+| **Dukungan Multi-Format** | Terpisah per Endpoint | Dibatasi Resolusi | **Image (JPG, PNG) & Video (MP4, WebM, MOV)** |
+| **Notifikasi & Bukti Tayang** | Hanya JSON Response | Dashboard Web Saja | **Screenshot Bukti Nyata ke Telegram** |
+| **Privasi Kredensial** | Disimpan di Server Pihak ke-3 | Cloud Pihak ke-3 | **100% Lokal di Mesin / VPS Anda** |
 
-### 🐦 1. Publikasi di X (Twitter)
-> Bot membuka feed, upload gambar, mengetik caption ringkas ramah limit karakter, lalu menangkap screenshot postingan yang sudah live:
+---
+
+## 📸 Bukti Hasil Eksekusi Langsung
+
+Sistem telah diuji secara menyeluruh dan terbukti berhasil mempublikasikan konten di seluruh platform target:
+
+### 🐦 1. Publikasi Real-Time di X (Twitter)
+> Bot membuka feed X, memvalidasi sesi cookie, mengunggah materi visual, menyematkan caption teroptimasi limit karakter, dan menangkap bukti tayang pasca-publikasi:
 
 <p align="center">
-  <img src="assets/proof_twitter.png" alt="Bukti Tayang di X Twitter" width="900" style="border-radius: 10px; border: 1px solid #334155;" />
+  <img src="assets/proof_twitter.png" alt="Bukti Tayang di X Twitter" width="920" style="border-radius: 12px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.5);" />
 </p>
 
 ---
 
-### 📸 2. Alur Posting di Instagram
-> Bot menavigasi menu "Buat", memilih poster dari storage, menulis caption lengkap, dan menyelesaikan proses penerbitan feed secara otomatis:
+### 📸 2. Alur Publikasi Otomatis di Instagram Feed
+> Bot menavigasi menu "Buat", memilih poster/video dari storage lokal, menerapkan caption humanis lowongan kerja/bisnis, dan menyelesaikan penerbitan:
 
 <p align="center">
-  <img src="assets/proof_instagram.png" alt="Bukti Alur Posting Instagram" width="900" style="border-radius: 10px; border: 1px solid #334155;" />
+  <img src="assets/proof_instagram.png" alt="Bukti Alur Posting Instagram" width="920" style="border-radius: 12px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.5);" />
 </p>
 
 ---
 
-## ⚡ Keunggulan Utama
+## ✨ Fitur Utama
 
-- 🕒 **Jadwal Tetap 3 Sesi Sehari**:
-  - **Pagi**: `07:00 WIB`
-  - **Siang**: `13:00 WIB`
-  - **Malam**: `18:00 WIB`
-- 🎯 **Target 9 Postingan per Hari**: 3 sesi $\times$ 3 platform (IG, FB, X) dengan rotasi poster acak agar tidak monoton.
-- 🍪 **Session-Aware Cookie Guard**: Sesi login tersimpan aman di `storage/sessions/`. Saat ada kendala jaringan atau delay UI, sistem tidak membuang cookie sehingga akun Anda tidak terkena checkpoint/verifikasi ulang.
-- ✍️ **Caption Humanis & To-the-Point**: Khusus materi Info Loker / Admin WFH, dibuat dengan gaya komunikasi yang luwes, ramah, dan langsung menyertakan kontak pelamar tanpa kalimat kaku.
-- 🚨 **Tangkap Artefak Error**: Jika postingan gagal, sistem otomatis mengambil screenshot layar error (`.png`) dan snapshot HTML (`.html`), lalu mengirim kartu notifikasi ke Telegram agar Anda bisa langsung tahu masalahnya.
-- 🖥️ **Web Dashboard Bawaan**: Pantau status postingan, hitung mundur sesi, cek galeri bukti tayang, atau lakukan posting manual langsung dari browser lokal (`http://localhost:3000`).
+- 🕒 **Jadwal 3 Sesi Harian Terjadwal (WIB)**:
+  - 🌅 **Sesi Pagi**: `07:00 WIB` (Peak commute & morning browsing)
+  - ☀️ **Sesi Siang**: `13:00 WIB` (Lunch break engagement)
+  - 🌙 **Sesi Malam**: `18:00 WIB` (Prime leisure browsing)
+- 🎯 **Kapasitas 9 Postingan per Hari**: 3 sesi $\times$ 3 platform (Instagram, Facebook, X) dengan rotasi aset acak dan algoritma anti-duplikasi konten.
+- 🍪 **Session-Aware Cookie Guard**: Penyimpanan sesi cookie di `storage/sessions/` dengan mekanisme *resilient retry*. Gangguan koneksi sementara tidak akan merusak atau menghapus sesi valid Anda.
+- ✍️ **Dynamic Humanized Copywriting**: Generator caption cerdas bergaya natural tanpa *AI slop/buzzwords*, lengkap dengan penyesuaian otomatis kontak rekrutmen (WhatsApp, Telegram, Email).
+- 🎥 **Multi-Format Asset Support**: Mendukung gambar (`.jpg`, `.jpeg`, `.png`) dan video (`.mp4`, `.webm`, `.mov`) dengan validasi ukuran berkas dan MIME-type sebelum eksekusi.
+- 🚨 **Automatic Failure Artifact Capture**: Saat terjadi kendala UI atau pop-up tak terduga, sistem secara otomatis mengambil screenshot layar kegagalan (`.png`) serta snapshot DOM (`.html`) dan mengirimkan kartu peringatan diagnostik ke Telegram.
+- 🖥️ **Integrated Web Dashboard**: Pantau hitung mundur sesi, periksa riwayat publikasi, lihat galeri bukti screenshot, atau jalankan posting manual via browser di `http://localhost:3000`.
+- 🔐 **AES-256-GCM Credential Encryption**: Seluruh kredensial dan konfigurasi sensitif dienkripsi secara aman menggunakan standar kriptografi AES-256-GCM.
+
+---
+
+## 🏗️ Arsitektur dan Alur Kerja
+
+```mermaid
+flowchart TD
+    subgraph Scheduler_Engine [🕒 Scheduler & Pre-Flight]
+        A[Cron Trigger: 07:00 / 13:00 / 18:00 WIB] --> B[Pre-Flight Asset Validation]
+        B --> C[Session Health & Cookie Integrity Check]
+    end
+
+    subgraph Browser_Automation [🌐 Playwright Resilient Engine]
+        C --> D{Pilih Platform}
+        D -->|Instagram| E1[IG Automator + Typing Jitter]
+        D -->|Facebook| E2[FB Automator + Selectors Fallback]
+        D -->|X Twitter| E3[X Automator + Auto Split Caption]
+        E1 & E2 & E3 --> F[Upload Media & Publish Post]
+    end
+
+    subgraph Verification_Telemetry [📱 Telemetry & Reporting]
+        F -->|Sukses| G1[Ambil Screenshot Bukti Tayang]
+        G1 --> H1[Kirim Laporan Foto & URL ke Telegram]
+        H1 --> I1[Catat Riwayat ke SQLite Database]
+
+        F -->|Gagal / Timeout| G2[Tangkap Screenshot Error & DOM Snapshot]
+        G2 --> H2[Klasifikasi Error & Retry Backoff]
+        H2 -->|Max Retries Exceeded| I2[Kirim Kartu Alert Diagnostik ke Telegram]
+    end
+```
 
 ---
 
 ## 🛠️ Panduan Instalasi & Persiapan
 
-### 1. Clone & Pasang Dependensi
+### 1. Prasyarat Sistem
+- **Node.js**: Versi `18.0.0` atau yang lebih baru.
+- **Google Chrome** atau **Chromium**: Terpasang di sistem.
+- **Git**: Untuk cloning repository.
+
+### 2. Clone & Pasang Dependensi
 ```bash
+# Clone repository
 git clone https://github.com/zakariyasync-hash/sosialmedia-manager-auto.git
+
+# Masuk ke direktori
 cd sosialmedia-manager-auto
+
+# Pasang dependensi
 npm install
 ```
 
-### 2. Siapkan Database SQLite
+### 3. Inisialisasi Database SQLite (Prisma)
 ```bash
 npm run prisma:push
 ```
 
-### 3. Buat File Konfigurasi `.env`
-Salin template konfigurasi:
+### 4. Konfigurasi Environment (`.env`)
+Salin berkas konfigurasi template:
 ```bash
 cp .env.example .env
 ```
 
-Isi file `.env` dengan data Anda:
+Buka `.env` menggunakan teks editor favorit Anda dan sesuaikan isinya:
 ```env
 PORT=3000
 NODE_ENV=development
-APP_SECRET_KEY=isi_kunci_acak_32_karakter_disini_bebas
+APP_TIMEZONE=Asia/Jakarta
 
-# Akun Instagram
-IG_USERNAME=username_ig_kamu
-IG_PASSWORD=password_ig_kamu
+DATABASE_URL="file:./dev.db"
+ENCRYPTION_SECRET="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 
-# Akun Facebook
-FB_EMAIL=email_fb_kamu@gmail.com
-FB_PASSWORD=password_fb_kamu
+# Akun Media Sosial
+IG_USERNAME="username_ig_anda"
+IG_PASSWORD="password_ig_anda"
 
-# Akun X (Twitter)
-X_USERNAME=username_x_kamu
-X_PASSWORD=password_x_kamu
+FB_EMAIL="email_fb_anda@gmail.com"
+FB_PASSWORD="password_fb_anda"
 
-# Kontak Lowongan (Otomatis masuk ke caption)
-CONTACT_EMAIL=recruitment@email.com
-CONTACT_WHATSAPP1=0812-3456-7890
-CONTACT_WHATSAPP2=0896-7538-0824
-CONTACT_TELEGRAM=@NamaAdmin
+X_USERNAME="username_atau_email_x_anda"
+X_PASSWORD="password_x_anda"
 
-# Telegram Bot untuk Laporan
-TELEGRAM_BOT_TOKEN=token_bot_dari_botfather
-TELEGRAM_CHAT_ID=id_chat_kamu
+HEADLESS_BROWSER=true
+
+# Telegram Bot untuk Laporan & Alert
+TELEGRAM_BOT_TOKEN="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
+TELEGRAM_CHAT_ID="987654321"
+
+# Jadwal Sesi Posting (WIB)
+SCHEDULE_SLOT_PAGI="07:00"
+SCHEDULE_SLOT_SIANG="13:00"
+SCHEDULE_SLOT_MALAM="18:00"
 ```
 
 ---
 
-## 🔐 Cara Login & Ambil Sesi Cookies
+## 🔐 Metode Autentikasi: Cookie Vault
 
-Anda hanya perlu login **satu kali saja**. Sistem menyediakan dua cara mudah:
+Anda hanya perlu melakukan autentikasi **satu kali saja**. Sistem menyediakan dua metode:
 
-### Cara 1: Lewat Terminal Interaktif (Rekomendasi)
-Jalankan perintah di bawah, browser akan terbuka untuk login, dan cookie otomatis tersimpan:
+### 🟢 Opsi A: Menggunakan Browser Chrome Asli (Sangat Direkomendasikan jika Akun Memakai 2FA)
+Metode ini memanfaatkan Chrome Debugging Protocol (CDP) sehingga Anda dapat login manual secara natural tanpa terdeteksi bot:
+1. Jalankan Chrome dalam mode debug:
+   ```bash
+   # Di Windows (atau klik ganda buka_chrome.bat)
+   npm run chrome:open
+   ```
+2. Jendela browser Chrome baru akan terbuka.
+3. Buka tab `instagram.com`, `facebook.com`, dan `x.com`, lalu login ke masing-masing akun Anda (selesaikan 2FA / verifikasi SMS jika ada).
+4. Setelah semua akun berhasil masuk ke halaman beranda, buka terminal baru dan jalankan sinkronisasi sesi:
+   ```bash
+   npm run chrome:sync
+   ```
+5. Selesai! Sesi cookie terenkripsi akan tersimpan otomatis ke dalam folder `storage/sessions/`. Anda dapat menutup jendela Chrome debug tersebut.
+
+### 🟡 Opsi B: Terminal Interaktif (CLI Prompt)
 ```bash
 # Login Instagram
 npm run login:ig
@@ -130,85 +223,140 @@ npm run login:fb
 npm run login:x
 ```
 
-### Cara 2: Pakai Browser Chrome Asli (`buka_chrome.bat`)
-Cocok kalau akun Anda pakai 2FA / verifikasi HP:
-1. Klik ganda file `buka_chrome.bat` (atau ketik `npm run chrome:open`).
-2. Browser Chrome akan terbuka. Buka tab `instagram.com`, `facebook.com`, dan `x.com`, lalu login seperti biasa.
-3. Buka terminal baru dan jalankan:
-   ```bash
-   npm run chrome:sync
-   ```
-4. Selesai! Cookie langsung terekstrak ke folder `storage/sessions/`. Tutup jendela Chrome debug tadi.
+---
+
+## 🤖 Telemetri & Laporan Telegram
+
+Setiap kali postingan berhasil terbit atau mengalami kendala, bot akan secara instan mengirimkan notifikasi ke akun/grup Telegram Anda:
+
+1. **Pembuatan Bot**:
+   - Buka Telegram dan cari **`@BotFather`**.
+   - Kirim perintah `/newbot`, lalu ikuti panduan hingga mendapatkan **HTTP API Token**.\n   - Masukkan token ke variabel `TELEGRAM_BOT_TOKEN` di berkas `.env`.
+2. **Menemukan Chat ID**:
+   - Buka Telegram dan cari **`@userinfobot`** (atau tambahkan bot Anda ke grup lalu gunakan `@getidsbot`).
+   - Masukkan ID angka tersebut ke `TELEGRAM_CHAT_ID`.
+3. **Mulai Chat**:
+   - Kirim pesan `/start` ke bot Anda di Telegram agar bot memiliki izin mengirimkan pesan.
+
+### 📱 Contoh Format Laporan Telegram:
+```text
+✅ [BERHASIL TAYANG] INSTAGRAM FEED
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 Waktu   : 02 Sep 2026, 07:01 WIB
+📌 Sesi    : Pagi (Slot #1)
+🖼️ Media   : poster_loker_admin_01.jpeg
+🔗 URL     : https://www.instagram.com/p/C_samplePost/
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 Caption :
+Lowongan Kerja: Admin Online WFH (Freelance)
+- Jam kerja fleksibel
+- Terbuka untuk lulusan SMA/SMK/Mahasiswa
+Kontak WA: 0812-3456-7890
+```
 
 ---
 
-## 🤖 Menghubungkan Bot Telegram
+## 🚀 Panduan Deployment 24/7
 
-1. Buka Telegram, cari **`@BotFather`**, ketik `/newbot`, lalu buat nama bot Anda.
-2. Salin token API yang diberikan ke `TELEGRAM_BOT_TOKEN`.
-3. Cari **`@userinfobot`** di Telegram untuk melihat ID akun Anda, lalu masukkan angkanya ke `TELEGRAM_CHAT_ID`.
-4. Masuk ke bot Anda di Telegram dan klik tombol **Start**.
-
----
-
-## 🚀 Menjalankan Bot
-
-### Mode Development (dengan Dashboard):
+### Menjalankan dalam Mode Pengembangan (Live Reload & Dashboard UI):
 ```bash
 npm run dev
 ```
-Buka dashboard di browser: `http://localhost:3000`
+Buka browser dan akses dashboard kontrol di: `http://localhost:3000`
 
-### Mode Production (Daemon 24 Jam):
+### Menjalankan dalam Mode Produksi (Latar Belakang / Background Daemon):
+
+#### Menggunakan PM2 (Rekomendasi VPS Linux & Windows Server):
 ```bash
+# Build TypeScript ke JavaScript
 npm run build
-npm start
+
+# Pasang PM2 secara global (jika belum ada)
+npm install -g pm2
+
+# Jalankan proses otomasi dengan PM2
+pm2 start dist/server.js --name "autosocial-247"
+
+# Simpan state agar otomatis menyala saat server reboot
+pm2 save
+pm2 startup
 ```
 
 ---
 
-## 🧪 Pengujian Sistem
+## 🧪 Pengujian dan Kualitas Sistem
 
-Seluruh logika error recovery, classifier, retry backoff, dan validasi format poster telah diuji dengan Jest:
+Sistem ini dirancang dengan standar keandalan tinggi dan dilengkapi dengan 8 rangkaian pengujian otomatis (*Unit, Integration & Chaos Test Suites*):
 
 ```bash
-# Jalankan seluruh unit test (31 tests)
+# Jalankan seluruh rangkaian test (39 test cases)
 npm test
-
-# Jalankan simulasi uji ketahanan (Chaos test)
-npm run test:chaos
 ```
+
+### 📋 Cakupan Pengujian:
+- **`tests/session-health.test.ts`**: Verifikasi integritas format JSON Playwright storageState dan deteksi sesi rusak/hilang.
+- **`tests/error-classifier.test.ts`**: Klasifikasi akurat terhadap timeout jaringan, redirect halaman login, CAPTCHA challenge, dan rate limit.
+- **`tests/retry-backoff.test.ts`**: Validasi algoritma *exponential backoff* dengan *randomized jitter*.
+- **`tests/resilient-navigation.test.ts`**: Uji navigasi bertingkat (*tiered navigation*) dan selector fallback.
+- **`tests/engine.test.ts`**: Uji enkripsi AES-256-GCM dan pre-flight validator poster.
+- **`tests/media-video-telegram.test.ts`**: Validasi multi-format video (MP4, WebM, MOV) dan keamanan escaping HTML Telegram.
+- **`tests/failure-screenshot-reporting.test.ts`**: Uji tangkap artefak kegagalan dan pembuatan caption humanis bebas AI slop.
+- **`tests/chaos-simulation.test.ts`**: Uji ketahanan terhadap ukuran file ekstrem (>5MB) dan format tidak valid.
 
 ---
 
-## 📁 Struktur Direktori
+## 📁 Struktur Direktori Repository
 
 ```text
-├── assets/               # Banner & bukti tangkapan layar tayang
-├── prisma/               # Database schema SQLite (Prisma ORM)
-├── public/               # File tampilan dashboard web (HTML/CSS/JS)
-├── reports/              # Laporan hasil verifikasi sistem
-├── scripts/              # Skrip login & sinkronisasi sesi
+├── assets/                  # Banner & bukti tangkapan layar publikasi
+├── prisma/                  # Definisi skema database SQLite (Prisma ORM)
+│   └── schema.prisma
+├── public/                  # Antarmuka web dashboard lokal
+│   ├── css/style.css
+│   ├── js/app.js
+│   └── index.html
+├── scripts/                 # Utility scripts untuk autentikasi & CDP sync
+│   ├── open_chrome_debug.ts
+│   ├── sync_sessions_from_chrome.ts
+│   └── login_instagram_with_otp.ts
 ├── src/
-│   ├── config/           # Konfigurasi aplikasi & environment
-│   ├── database/         # Koneksi database Prisma
+│   ├── config/              # Manajemen variabel lingkungan & konfigurasi
+│   ├── controllers/         # Handler REST API untuk dashboard
+│   ├── database/            # Klien Prisma ORM
+│   ├── routes/              # Rute endpoint Express API
 │   ├── services/
-│   │   ├── browser/      # Engine Playwright & helper navigasi
-│   │   ├── error/        # Klasifikasi error & retry dengan backoff
-│   │   ├── platforms/    # Automator Instagram, Facebook, dan X
-│   │   ├── caption.service.ts   # Pembuat caption humanis
-│   │   ├── scheduler.service.ts # Mesin jadwal 24/7
-│   │   └── telegram.service.ts  # Pengirim bukti screenshot & alert
-│   └── server.ts         # Server Express & API
-├── storage/
-│   ├── posters/          # Folder file poster yang akan diunggah
-│   ├── screenshots/      # Bukti screenshot postingan berhasil
-│   └── sessions/         # File cookies (.json)
-└── tests/                # Unit & chaos test suites
+│   │   ├── browser/         # Playwright driver, session guard, & navigation helper
+│   │   ├── error/           # Error classifier taxonomy & retry backoff engine
+│   │   ├── platforms/       # Otomasi spesifik platform (Instagram, Facebook, X)
+│   │   ├── asset.service.ts # Pre-flight validator untuk media foto/video
+│   │   ├── caption.service.ts # Dynamic humanized copywriting generator
+│   │   ├── scheduler.service.ts # Engine penjadwalan 24/7 (3 slot harian)
+│   │   └── telegram.service.ts  # Layanan telemetri notifikasi & alert
+│   └── server.ts            # Entrypoint aplikasi Express & scheduler starter
+├── storage/                 # Direktori data lokal (dikecualikan dari git)
+│   ├── posters/             # Folder aset materi konten foto/video
+│   ├── screenshots/         # Bukti tangkapan layar postingan & kegagalan
+│   └── sessions/            # Berkas sesi cookies (.json)
+├── tests/                   # 8 suite pengujian komprehensif Jest
+├── .env.example             # Template konfigurasi environment
+├── .gitignore               # Konfigurasi proteksi berkas sensitif
+├── package.json             # Manifest paket & npm scripts
+└── tsconfig.json            # Konfigurasi compiler TypeScript
 ```
 
 ---
 
-## 📜 Lisensi
+## 🛡️ Kebijakan Privasi & Keamanan (Zero Leak)
 
-Lisensi **ISC**. Bebas digunakan, dimodifikasi, dan disesuaikan untuk kebutuhan otomasi pribadi maupun tim.
+Repository ini menerapkan prinsip **Zero Secret Leak**:
+1. Berkas `.env` asli **tidak pernah disertakan** ke dalam repositori git.
+2. Seluruh berkas sesi cookie (`storage/sessions/*.json`), profil browser Chrome, serta tangkapan layar runtime dikecualikan secara ketat di `.gitignore`.
+3. Kredensial akun yang disimpan secara lokal dienkripsi menggunakan kunci enkripsi independen milik Anda.
+
+---
+
+## 📜 Lisensi & Penafian
+
+Proyek ini dilisensikan di bawah lisensi **[ISC License](LICENSE)**.
+
+> **Penafian (Disclaimer)**: Proyek ini dibuat untuk tujuan otomasi pengelolaan konten media sosial mandiri yang sah. Pengguna bertanggung jawab penuh atas materi konten yang dipublikasikan dan kepatuhan terhadap ketentuan layanan (*Terms of Service*) masing-masing platform media sosial.
