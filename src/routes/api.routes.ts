@@ -24,13 +24,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Maksimal 5 MB
+  limits: { fileSize: 100 * 1024 * 1024 }, // Maksimal 100 MB untuk video
   fileFilter: (req, file, cb) => {
-    const allowed = ['image/jpeg', 'image/png', 'image/jpg'];
-    if (allowed.includes(file.mimetype)) {
+    const allowed = [
+      'image/jpeg',
+      'image/png',
+      'image/jpg',
+      'video/mp4',
+      'video/quicktime',
+      'video/webm',
+      'video/x-matroska',
+    ];
+    if (allowed.includes(file.mimetype) || file.mimetype.startsWith('video/') || file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {
-      cb(new Error('Format file tidak didukung. Hanya JPEG dan PNG yang diperbolehkan.'));
+      cb(new Error('Format file tidak didukung. Gunakan JPEG, PNG, MP4, MOV, atau WebM.'));
     }
   },
 });
