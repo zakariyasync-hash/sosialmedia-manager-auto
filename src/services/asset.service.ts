@@ -67,4 +67,125 @@ export class AssetService {
     const buffer = fs.readFileSync(filePath);
     const checksum = CryptoService.getChecksum(buffer);
 
-    return {\n      isValid: errors.length === 0,\n      errors,\n      fileSizeBytes,\n      mimeType,\n      checksum,\n    };\n  }\n\n  /**\n   * Cek apakah sebuah file atau MIME type merupakan video\n   */\n  public static isVideoAsset(filePathOrMime: string): boolean {\n    if (!filePathOrMime) return false;\n    const lower = filePathOrMime.toLowerCase();\n    if (lower.startsWith('video/')) return true;\n    const ext = path.extname(lower);\n    return ['.mp4', '.mov', '.webm', '.mkv'].includes(ext);\n  }\n\n  /**\n   * Sinkronisasi file di folder ./storage/posters ke database\n   */\n  public static async syncLocalPosters() {\n    this.ensureDirectories();\n    const files = fs.readdirSync(config.paths.postersDir);\n\n    const syncedAssets = [];\n\n    for (const file of files) {\n      const fullPath = path.join(config.paths.postersDir, file);\n      if (fs.statSync(fullPath).isDirectory()) continue;\n\n      const check = this.validateFile(fullPath);\n      if (!check.isValid) {\n        console.warn(`⚠️ [Asset] File ${file} tidak valid: ${check.errors.join(', ')}`);\n        continue;\n      }\n\n      // Upsert ke database\n      const asset = await prisma.asset.upsert({\n        where: { checksumSha256: check.checksum },\n        update: {\n          storagePath: fullPath,\n          fileName: file,\n          publicUrl: `/storage/posters/${file}`,\n          fileSizeBytes: check.fileSizeBytes,\n          mimeType: check.mimeType,\n        },\n        create: {\n          storagePath: fullPath,\n          fileName: file,\n          fileSizeBytes: check.fileSizeBytes,\n          mimeType: check.mimeType,\n          checksumSha256: check.checksum,\n          status: 'AVAILABLE',\n          publicUrl: `/storage/posters/${file}`,\n          captionTemplate: CaptionService.generateLokerCaption(),\n        },\n      });\n\n      syncedAssets.push(asset);\n    }\n\n    return syncedAssets;\n  }\n\n  /**\n   * Smart Shuffle Rotator:\n   * Mengambil 3 poster unik untuk sebuah sesi (Pagi, Siang, Malam).\n   * Menjamin 3 medsos (IG, FB, X) mendapat poster berbeda di sesi yang sama,\n   * dan merotasikan poster sepanjang hari.\n   */\n  public static async getSessionPosterDistribution(sessionType: 'PAGI' | 'SIANG' | 'MALAM') {\n    await this.syncLocalPosters();\n\n    let assets = await prisma.asset.findMany({\n      where: { status: { in: ['AVAILABLE', 'POSTED'] } },\n      orderBy: { createdAt: 'asc' },\n    });\n\n    if (assets.length === 0) {\n      throw new Error('Tidak ada poster di direktori ./storage/posters. Silakan upload minimal 1-3 poster.');\n    }\n\n    // Jika jumlah aset < 3, gunakan yang ada dengan rotasi\n    const posterPool = [...assets];\n    const total = posterPool.length;\n\n    let offset = 0;\n    if (sessionType === 'SIANG') offset = 1;\n    if (sessionType === 'MALAM') offset = 2;\n\n    const instagramPoster = posterPool[offset % total];\n    const facebookPoster = posterPool[(offset + 1) % total];\n    const xPoster = posterPool[(offset + 2) % total];\n\n    return {\n      sessionType,\n      distribution: {\n        INSTAGRAM: instagramPoster,\n        FACEBOOK: facebookPoster,\n        X: xPoster,\n      },\n    };\n  }\n\n  /**\n   * Dapatkan seluruh poster beserta statusnya\n   */\n  public static async getAllAssets() {\n    return prisma.asset.findMany({\n      orderBy: { createdAt: 'desc' },\n      include: {\n        postLogs: {\n          take: 3,\n          orderBy: { createdAt: 'desc' },\n        },\n      },\n    });\n  }\n}\n
+    return {
+      isValid: errors.length === 0,
+      errors,
+      fileSizeBytes,
+      mimeType,
+      checksum,
+    };
+  }
+
+  /**
+   * Cek apakah sebuah file atau MIME type merupakan video
+   */
+  public static isVideoAsset(filePathOrMime: string): boolean {
+    if (!filePathOrMime) return false;
+    const lower = filePathOrMime.toLowerCase();
+    if (lower.startsWith('video/')) return true;
+    const ext = path.extname(lower);
+    return ['.mp4', '.mov', '.webm', '.mkv'].includes(ext);
+  }
+
+  /**
+   * Sinkronisasi file di folder ./storage/posters ke database
+   */
+  public static async syncLocalPosters() {
+    this.ensureDirectories();
+    const files = fs.readdirSync(config.paths.postersDir);
+
+    const syncedAssets = [];
+
+    for (const file of files) {
+      const fullPath = path.join(config.paths.postersDir, file);
+      if (fs.statSync(fullPath).isDirectory()) continue;
+
+      const check = this.validateFile(fullPath);
+      if (!check.isValid) {
+        console.warn(`⚠️ [Asset] File ${file} tidak valid: ${check.errors.join(', ')}`);
+        continue;
+      }
+
+      // Upsert ke database
+      const asset = await prisma.asset.upsert({
+        where: { checksumSha256: check.checksum },
+        update: {
+          storagePath: fullPath,
+          fileName: file,
+          publicUrl: `/storage/posters/${file}`,
+          fileSizeBytes: check.fileSizeBytes,
+          mimeType: check.mimeType,
+        },
+        create: {
+          storagePath: fullPath,
+          fileName: file,
+          fileSizeBytes: check.fileSizeBytes,
+          mimeType: check.mimeType,
+          checksumSha256: check.checksum,
+          status: 'AVAILABLE',
+          publicUrl: `/storage/posters/${file}`,
+          captionTemplate: CaptionService.generateLokerCaption(),
+        },
+      });
+
+      syncedAssets.push(asset);
+    }
+
+    return syncedAssets;
+  }
+
+  /**
+   * Smart Shuffle Rotator:
+   * Mengambil 3 poster unik untuk sebuah sesi (Pagi, Siang, Malam).
+   * Menjamin 3 medsos (IG, FB, X) mendapat poster berbeda di sesi yang sama,
+   * dan merotasikan poster sepanjang hari.
+   */
+  public static async getSessionPosterDistribution(sessionType: 'PAGI' | 'SIANG' | 'MALAM') {
+    await this.syncLocalPosters();
+
+    let assets = await prisma.asset.findMany({
+      where: { status: { in: ['AVAILABLE', 'POSTED'] } },
+      orderBy: { createdAt: 'asc' },
+    });
+
+    if (assets.length === 0) {
+      throw new Error('Tidak ada poster di direktori ./storage/posters. Silakan upload minimal 1-3 poster.');
+    }
+
+    // Jika jumlah aset < 3, gunakan yang ada dengan rotasi
+    const posterPool = [...assets];
+    const total = posterPool.length;
+
+    let offset = 0;
+    if (sessionType === 'SIANG') offset = 1;
+    if (sessionType === 'MALAM') offset = 2;
+
+    const instagramPoster = posterPool[offset % total];
+    const facebookPoster = posterPool[(offset + 1) % total];
+    const xPoster = posterPool[(offset + 2) % total];
+
+    return {
+      sessionType,
+      distribution: {
+        INSTAGRAM: instagramPoster,
+        FACEBOOK: facebookPoster,
+        X: xPoster,
+      },
+    };
+  }
+
+  /**
+   * Dapatkan seluruh poster beserta statusnya
+   */
+  public static async getAllAssets() {
+    return prisma.asset.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        postLogs: {
+          take: 3,
+          orderBy: { createdAt: 'desc' },
+        },
+      },
+    });
+  }
+}
