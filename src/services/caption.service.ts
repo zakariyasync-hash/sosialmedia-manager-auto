@@ -36,44 +36,10 @@ export class CaptionService {
 
     if (platform === 'X') {
       // Format ringkas humanis ramah limit 280 karakter untuk X (Twitter)
-      return `📢 LOWONGAN FREELANCE ADMIN WFH!
-
-Kerja santai dari rumah, tugas posting & share materi. Cocok untuk IRT & Mahasiswa.
-
-💰 Gaji 700rb/minggu | Tanpa KTP | Halal
-
-📲 Hubungi Admin:
-WA: ${wa1}
-Tele: ${tele}
-
-#lokerwfh #infoloker`;
+      return `📢 LOWONGAN FREELANCE ADMIN WFH!\n\nKerja santai dari rumah, tugas posting & share materi. Cocok untuk IRT & Mahasiswa.\n\n💰 Gaji 700rb/minggu | Tanpa KTP | Halal\n\n📲 Hubungi Admin:\nWA: ${wa1}\nTele: ${tele}\n\n#lokerwfh #infoloker`;
     }
 
     // Format lengkap komunikatif, humanis & persuasif untuk Instagram & Facebook
-    return `✨ LOWONGAN FREELANCE ADMIN WFH (KERJA DARI RUMAH) ✨
-
-Halo semuanya! Buat ibu rumah tangga, mahasiswa, pelajar, atau siapa aja yang lagi butuh penghasilan tambahan tanpa harus keluar rumah, yuk gabung bareng tim kami! 🏠💻
-
-📌 DETAIL PEKERJAAN:
-• Tugas simpel: Cukup posting & share materi yang sudah disiapkan (gak perlu ribet bikin konten sendiri).
-• Tanpa target viewers / like / komentar.
-• Tanpa cari member & tanpa download aplikasi aneh-aneh.
-
-🎁 BENEFIT & FASILITAS:
-✅ Gaji Pokok Rp700.000 / Minggu
-✅ Bonus Harian + Tunjangan Kuota
-✅ Waktu kerja fleksibel & santai dari rumah
-✅ Welcome semua usia & Tanpa KTP (Aman & Halal)
-
-📲 CARA DAFTAR (LANGSUNG HUBUNGI ADMIN):
-Langsung chat admin sekarang ya (pilih salah satu):
-👉 WhatsApp 1: ${wa1}
-👉 WhatsApp 2: ${wa2}
-👉 Telegram: ${tele} (Fast Respon ⚡)
-👉 Email: ${email}
-
-Kuota terbatas ya teman-teman, yuk langsung chat admin sekarang sebelum slotnya penuh! Semoga rezekinya lancar selalu. 🙌✨
-
-#infoloker #lokerwfh #adminwfh #kerjaonline #kerjadarirumah #freelanceindo #lokersampingan #penghasilantambahan #lokerterbaru #lowongankerja`;
+    return `✨ LOWONGAN FREELANCE ADMIN WFH (KERJA DARI RUMAH) ✨\n\nHalo semuanya! Buat ibu rumah tangga, mahasiswa, pelajar, atau siapa aja yang lagi butuh penghasilan tambahan tanpa harus keluar rumah, yuk gabung bareng tim kami! 🏠💻\n\n📌 DETAIL PEKERJAAN:\n• Tugas simpel: Cukup posting & share materi yang sudah disiapkan (gak perlu ribet bikin konten sendiri).\n• Tanpa target viewers / like / komentar.\n• Tanpa cari member & tanpa download aplikasi aneh-aneh.\n\n🎁 BENEFIT & FASILITAS:\n✅ Gaji Pokok Rp700.000 / Minggu\n✅ Bonus Harian\n✅ Waktu kerja fleksibel & santai dari rumah\n✅ Welcome semua usia & Tanpa KTP (Aman & Halal)\n\n📲 CARA DAFTAR (LANGSUNG HUBUNGI ADMIN):\nLangsung chat admin sekarang ya (pilih salah satu):\n👉 WhatsApp 1: ${wa1}\n👉 WhatsApp 2: ${wa2}\n👉 Telegram: ${tele} (Fast Respon ⚡)\n👉 Email: ${email}\n\nKuota terbatas ya teman-teman, yuk langsung chat admin sekarang sebelum slotnya penuh! Semoga rezekinya lancar selalu. 🙌✨\n\n#infoloker #lokerwfh #adminwfh #kerjaonline #kerjadarirumah #freelanceindo #lokersampingan #penghasilantambahan #lokerterbaru #lowongankerja`;
   }
 }
